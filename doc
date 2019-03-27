@@ -1,0 +1,5 @@
+1.Register-服务注册
+Eureka Client向服务端注册信息时，提供自身的元数据；
+元数据：
+标准元数据：主机名、IP地址、端口、状态页、健康检查等信息
+自定义元数据：通过eureka.instance.metadata-map配置
