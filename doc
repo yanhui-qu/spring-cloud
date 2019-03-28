@@ -3,3 +3,9 @@ Eureka Client向服务端注册信息时，提供自身的元数据；
 元数据：
 标准元数据：主机名、IP地址、端口、状态页、健康检查等信息
 自定义元数据：通过eureka.instance.metadata-map配置
+2.服务续约
+客户端默认向服务端发送心跳间隔时间30s,属性设置eureka.instance.lease-renewal-interval-in-seconds:30s;
+Eureka Server剔除服务的间隔时间90s,即90s收不到心跳剔除该服务 eureka.instance.lease-expiration-duration-in-seconds:90s;
+3.Fetch Registries 获取服务注册列表信息，缓存到本地
+服务注册列表信息30s更新一次，默认传输格式json，也支持xml
+eureka.client.registry-fetch-interval-seconds:30s

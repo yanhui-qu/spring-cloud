@@ -27,7 +27,6 @@ public class HiController {
     @GetMapping("/user-instance")
     public void getUserInstance(){
         List<ServiceInstance> instances = discoveryClient.getInstances("eureka-client");
-        final List<String> services = discoveryClient.getServices();
         for (int i = 0; i < instances.size(); i++) {
             ServiceInstance instance = instances.get(i);
         }
