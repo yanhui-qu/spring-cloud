@@ -1,10 +1,12 @@
 spring:
-  profiles:peer1
+  profiles: peer1
 server:
   port: 8761
 eureka:
   instance:
     hostname: peer1
   client:
+    #register-with-eureka: false
+    #fetch-registry: false
     service-url:
-      defaultZone: http://peer1:8762/eureka/
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/

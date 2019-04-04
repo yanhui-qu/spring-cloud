@@ -1,5 +1,7 @@
 package com.spring.cloud.eurekaclient;
 
+import com.netflix.discovery.DiscoveryClient;
+import com.netflix.eureka.registry.ResponseCacheImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -13,7 +15,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 public class EurekaClientApplication {
 
     public static void main(String[] args) {
-
+        DiscoveryClient client;
+        ResponseCacheImpl responseCacheImpl;
         SpringApplication.run(EurekaClientApplication.class, args);
     }
 
