@@ -4,8 +4,9 @@ Eureka Client向服务端注册信息时，提供自身的元数据；
 标准元数据：主机名、IP地址、端口、状态页、健康检查等信息
 自定义元数据：通过eureka.instance.metadata-map配置
 2.服务续约
-客户端默认向服务端发送心跳间隔时间30s,属性设置eureka.instance.lease-renewal-interval-in-seconds:30s;
-Eureka Server剔除服务的间隔时间90s,即90s收不到心跳剔除该服务 eureka.instance.lease-expiration-duration-in-seconds:90s;
+客户端（服务提供者）默认向服务端发送心跳间隔时间30s,属性设置eureka.instance.lease-renewal-interval-in-seconds:30s;
+Eureka Server（间隔60s检查是否存在剔除的服务）剔除的服务间隔时间90s没有服务续约,即90s收不到心跳剔除该服务
+eureka.instance.lease-expiration-duration-in-seconds:90s;
 3.Fetch Registries 获取服务注册列表信息，缓存到本地
 服务注册列表信息30s更新一次，默认传输格式json，也支持xml
 eureka.client.registry-fetch-interval-seconds:30s
@@ -63,5 +64,23 @@ spring:
     name: eureka-client
 启动客户端服务成功后刷新两个注册中心，发现eureka-client提供的服务在两个注册中心都注册成功。
 也可以defaultZone: http://peer1:8761/eureka/，http://peer2:8762/eureka/
-5.
+5.服务治理
+三个角色：
+服务注册中心，负责管理维护服务列表信息，并维持与客户端（提供者、消费者）的通信。
+    自我保护机制eureka.server.enable-self-preservation: true(false关闭)，开启时会将当前的实例注册信息保护起
+    来，让这些实例不会过期。但是， 在这段保护期间内实例若出现问题， 那么客户端很容易拿到实际已经不存在的服务实例，
+    会出现调用失败的清况， 所以客户端必须要有容错机制， 比如可以使用请求重试、 断路器等机制。
+服务提供者，在启动的时候会通过发送REST请求的方式将自己注册到EurekaServer上， 同时带上了自身服务的一些元数据信息。
+    注册成功后，向注册中心发送心跳进行服务续约。
+服务消费者，获取服务列表，服务调用
+6.集群服务同步
+7.源码解读
+7.1 @EnableDiscoveryClient 说明：Annotation to enable a DiscoveryClient implementation.该注解启用DiscoveryClient
+7.2 客户端类DiscoveryClient 说明：The class that is instrumental for interactions with <tt>Eureka Server</tt>.
+    即该类是与Eureka Server交互的类。
+     * Eureka Client职责：
+     * a) <em>Registering</em> the instance with <tt>Eureka Server</tt> 注册服务
+     * b) <em>Renewal</em>of the lease with <tt>Eureka Server</tt> 服务续约
+     * c) <em>Cancellation</em> of the lease from <tt>Eureka Server</tt> during shutdown 关闭自身服务时通知服务下线
+     * d) <em>Querying</em> the list of services/instances registered with <tt>Eureka Server</tt> 获取服务列表信息
 
