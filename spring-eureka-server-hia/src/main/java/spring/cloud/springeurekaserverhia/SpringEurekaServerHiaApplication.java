@@ -3,6 +3,7 @@ package spring.cloud.springeurekaserverhia;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.eureka.server.EurekaServerBootstrap;
 
 /**
  * 注：@SpringBootApplication注解只会扫描当前包及其子包
