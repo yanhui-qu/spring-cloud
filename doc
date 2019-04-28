@@ -83,4 +83,6 @@ spring:
      * b) <em>Renewal</em>of the lease with <tt>Eureka Server</tt> 服务续约
      * c) <em>Cancellation</em> of the lease from <tt>Eureka Server</tt> during shutdown 关闭自身服务时通知服务下线
      * d) <em>Querying</em> the list of services/instances registered with <tt>Eureka Server</tt> 获取服务列表信息
+8.自我保护机制
+
 
